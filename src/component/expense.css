@@ -1,0 +1,14 @@
+.f-label {
+    font-size: 16px; /* Adjust the font size as needed */
+}
+
+.text-left {
+    text-align: left;
+}
+
+.form-group.is-invalid {
+    .invalid-feedback {
+        display: block;
+        font-color: blue;
+    }
+}
