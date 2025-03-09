@@ -5,6 +5,7 @@ import FooterComponent from "./component/FooterComponent";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ListExpenseTypeComponent from "./component/ListExpenseTypeComponent";
 import ExpenseComponent from "./component/ExpenseComponent";
+import { RegisterComponent } from './component/RegisterComponent';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
                         <Route path='/' element={<ListExpenseTypeComponent/>} />
                         <Route path='/add-expense-type' element={<ExpenseComponent/>} />
                         <Route path='/edit-expense-type/:id' element={<ExpenseComponent/>}/>
+                        <Route path='/register' element={<RegisterComponent/>}/>
                     </Routes>
                   <FooterComponent/>
               </BrowserRouter>

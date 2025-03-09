@@ -40,9 +40,7 @@ const ListExpenseTypeComponent = () => {
 
    return (
             <div className='container'>
-              
-                <h3 className='text-center card-header text-black'>Expense Types</h3>
-                    <button className={'btn btn-primary mb-2'} onClick={addNewExpenseType}>Add Expense Type</button>
+                  <button className={'btn btn-primary mb-2'} onClick={addNewExpenseType}>Add Expense Type</button>
                     <table className='table table-striped table-bordered'>
                         <thead>
                             <tr>
