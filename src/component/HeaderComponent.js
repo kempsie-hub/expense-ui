@@ -20,6 +20,11 @@ const HeaderComponent = () => {
                                 <NavLink to="/register" class="navbar-link">Register</NavLink>
                             </li>
                     </ul>
+                    <ul className='navbar-nav'>
+                            <li className='nav-item navbar-brand'>
+                                <NavLink to="/login" class="navbar-link">Login</NavLink>
+                            </li>
+                    </ul>
                 </nav>
             </header>
         </div>
