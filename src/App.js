@@ -8,8 +8,10 @@ import ExpenseComponent from "./component/ExpenseComponent";
 import { RegisterComponent } from './component/RegisterComponent';
 import LoginComponent from './component/LoginComponent';
 import WelcomePageComponent from './component/WelcomePageComponent';
+import { isUserLoggedIn } from './service/ExpenseTypeService';
 
 function App() {
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -17,7 +19,8 @@ function App() {
               <BrowserRouter>
                   <HeaderComponent/>
                     <Routes>
-                        <Route path='/' element={<ListExpenseTypeComponent/>} />
+                        
+                        <Route path='/' element={isUserLoggedIn()?<ListExpenseTypeComponent/>:<LoginComponent/>}/>
                         <Route path='/add-expense-type' element={<ExpenseComponent/>} />
                         <Route path='/edit-expense-type/:id' element={<ExpenseComponent/>}/>
                         <Route path='/register' element={<RegisterComponent/>}/>

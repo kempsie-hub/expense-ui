@@ -3,6 +3,7 @@ import axios from "axios";
 axios.interceptors.request.use(
    function(config){
       config.headers['Authorization'] = getToken();
+      config.headers['Access-Control-Allow-Origin'] = '*';
       return config;
    },
    function(error){
@@ -17,13 +18,15 @@ const REGISTER_USER_API_URL = "v1/auth";
 
 const LOGIN_URL = "v1/auth/login";
 
+const PUT_EXPENSE_TYPES_BASE_URL = "api/expense-types";
+
 export const getExpenseTypes = () =>  axios.get(EXPENSE_TYPES_BASE_URL);
 
 export const createExpenseType = (expenseType) =>  axios.post(EXPENSE_TYPES_BASE_URL, expenseType);
 
 export const getExpenseType = (expenseTypeId) =>  axios.get(EXPENSE_TYPES_BASE_URL+'/'+ expenseTypeId);
 
-export const updateExpenseType = (expenseTypeId, employee) =>  axios.put(EXPENSE_TYPES_BASE_URL+'/'+ expenseTypeId, employee);
+export const updateExpenseType = (expenseTypeId, expenseType) =>  axios.put(PUT_EXPENSE_TYPES_BASE_URL+'/'+ expenseTypeId, expenseType);
 
 export const deleteExpenseType = (expenseTypeId) =>  axios.delete(EXPENSE_TYPES_BASE_URL+'/'+ expenseTypeId);
 
@@ -34,3 +37,25 @@ export const loginAPICall = (username, password) => axios.post(LOGIN_URL, {usern
 export const storetoken = (token) =>  localStorage.setItem("token", token);
 
 export const getToken = () => localStorage.getItem("token");
+
+export const saveLoggedInUser = (username) => sessionStorage.setItem("authenticatedUser",username);
+
+export const isUserLoggedIn = () => {
+   
+   const username = sessionStorage.getItem("authenticatedUser");
+   console.log('s1...............');
+   console.log('username: '+username);
+   if(username){
+      return true;
+   } else {
+      return false;
+   }
+};
+
+export const getLoggedInUser = () => sessionStorage.getItem("authenticatedUser")
+
+export const logout = () => {
+   localStorage.clear();
+   sessionStorage.clear();
+   
+};

@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react';
-import {getExpenseTypes, deleteExpenseType} from '../service/ExpenseTypeService';
+import {getExpenseTypes, deleteExpenseType, isUserLoggedIn} from '../service/ExpenseTypeService';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
 
@@ -8,9 +8,13 @@ const ListExpenseTypeComponent = () => {
 
     const navigator = useNavigate();
 
+    
+
 
     useEffect(()=> {
-        getAllExpenseTypes();
+        const isAuth = isUserLoggedIn();
+        console.log('isAUth...........'+ isAuth);
+        isAuth && getAllExpenseTypes();
     },[]);
 
     function getAllExpenseTypes(){
@@ -26,6 +30,7 @@ const ListExpenseTypeComponent = () => {
     }
 
     function updateExpenseType(id){
+        console.log('11111111111111111111111111111111111111111111111111');
         navigator(`/edit-expense-type/${id}`)
     }
 

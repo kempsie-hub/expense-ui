@@ -18,17 +18,21 @@ const ExpenseComponent = () => {
 
     useEffect(()=>{
         if(id){
+            console.log('2222222222222222222222: '+id);
             getExpenseType(id).then((response)=>{
                 console.log('--------------1'+JSON.stringify(response.data));
                 setName(response.data.name);
                 setDescription(response.data.description);
                 setRegistrationRequired(response.data.registrationRequired);
 
-            })
+            }).catch(error => {
+                console.log('aaaaaaaaaaaaa............................'+error)
+            });
         }
     },[id])
 
     function saveExpenseType(e) {
+        console.log('....................................................1');
         e.preventDefault();
         const newExpenseType = { name: name, description: description, registrationRequired: registrationRequired };
             console.log('--------------2'+JSON.stringify(newExpenseType));

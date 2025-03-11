@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { loginAPICall, storetoken } from '../service/ExpenseTypeService';
+import { getLoggedInUser, getToken, isUserLoggedIn, loginAPICall, saveLoggedInUser, storetoken } from '../service/ExpenseTypeService';
 import { useNavigate } from 'react-router-dom';
 
 const LoginComponent = () => {
@@ -20,14 +20,21 @@ const LoginComponent = () => {
 
 
         await loginAPICall(username, password).then((response) => {
+            
             console.log(response.data);
 
             const token = 'Basic ' + window.btoa(username + ":" + password);
 
             storetoken(token);
+            saveLoggedInUser(username);
+            console.log(isUserLoggedIn());
+           
 
-            navigator("/welcome")
-
+           
+            console.log(getLoggedInUser)
+            console.log(getLoggedInUser);
+            navigator("/");
+            window.location.reload(false);
         }).catch(error => {
             console.error(error);
         })
