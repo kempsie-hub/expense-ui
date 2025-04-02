@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react';
-import {getExpenseTypes, deleteExpenseType, isUserLoggedIn} from '../service/ExpenseTypeService';
+import {getExpenseTypes, getToken, isUserLoggedIn} from '../service/ExpenseTypeService';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
 
@@ -9,6 +9,31 @@ const ListExpenseTypeComponent = () => {
     const navigator = useNavigate();
 
     
+
+    const deleteExpenseType = async(expenseTypeId)  =>  {
+       console.log('deleting....'+expenseTypeId)
+            try{
+            const result = await fetch(`http://localhost:8081/api/expense-types/${expenseTypeId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': getToken()
+                }
+            });
+            
+             if (!result.ok) {
+                        throw new Error('Error deleting expense type');
+             }
+    
+            const data = await result.data;
+            console.log('expense type deleted successfully' +data);
+            window.location.reload(false);
+            navigator('/');
+
+            } catch(error){
+                console.log(JSON.stringify(error));
+            }
+    
+    }
 
 
     useEffect(()=> {
@@ -35,12 +60,7 @@ const ListExpenseTypeComponent = () => {
     }
 
     function deleteExpenseTypeById(id){
-        deleteExpenseType(id).then((response)=>{
-            console.log("Deleted successfully"+response.data);
-            getAllExpenseTypes();
-        }).catch((error) => {
-            console.log(error);
-        });
+        deleteExpenseType(id);
     }
 
    return (

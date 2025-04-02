@@ -24,11 +24,12 @@ export const getExpenseTypes = () =>  axios.get(EXPENSE_TYPES_BASE_URL);
 
 export const createExpenseType = (expenseType) =>  axios.post(EXPENSE_TYPES_BASE_URL, expenseType);
 
-export const getExpenseType = (expenseTypeId) =>  axios.get(EXPENSE_TYPES_BASE_URL+'/'+ expenseTypeId);
+export const getExpenseType = (expenseTypeId) => axios.get('/api/expense-types/3');
+   // axios.get(EXPENSE_TYPES_BASE_URL+'/'+ expenseTypeId);
 
-export const updateExpenseType = (expenseTypeId, expenseType) =>  axios.put(PUT_EXPENSE_TYPES_BASE_URL+'/'+ expenseTypeId, expenseType);
+export const updateExpenseType = (expenseTypeId, expenseType) =>  axios.put('http://localhost:8081/api/expense-types/3', expenseType);
 
-export const deleteExpenseType = (expenseTypeId) =>  axios.delete(EXPENSE_TYPES_BASE_URL+'/'+ expenseTypeId);
+export const deleteExpenseType = (expenseTypeId) =>  axios.delete(`/api/expense-types/+'/'+ expenseTypeId`);
 
 export const registerUser = (userDTO) => axios.post(REGISTER_USER_API_URL, userDTO);
 

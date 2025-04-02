@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './expense.css'
-import {createExpenseType, getExpenseType, updateExpenseType} from "../service/ExpenseTypeService";
+import {createExpenseType, getToken} from "../service/ExpenseTypeService";
 import {useNavigate, useParams} from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const ExpenseComponent = () => {
     const{id} = useParams();
@@ -16,18 +17,68 @@ const ExpenseComponent = () => {
         description: ''
     });
 
+    const updateExpenseType = async(expenseTypeId, expenseType)  =>  {
+       console.log('updating....'+expenseTypeId)
+            try{
+            const result = await fetch(`http://localhost:8081/api/expense-types/${expenseTypeId}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': getToken(),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(expenseType)
+            });
+            
+             if (!result.ok) {
+                        throw new Error('Error updating expense type');
+             }
+    
+                    const data = await result.json();
+                    console.log('Data updated successfully' );
+                    navigator('/');
+            } catch(error){
+                console.log('error: '+error);
+            }
+    
+    }
+
+    const expenseType = async(id) =>{
+        console.log('fetching....')
+        try{
+        const result = await fetch(`http://localhost:8081/api/expense-types/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Basic '+window.btoa('kempegowda:profile'),
+                'Content-Type': 'application/json'
+            }
+        });
+          if (!result.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await result.json();
+                setName(data.name);
+                setDescription(data.description);
+                setRegistrationRequired(data.registrationRequired);
+                console.log('response: ' + JSON.stringify(data));
+        } catch(error){
+            console.log('error: '+error);
+        }
+
+    }
+
     useEffect(()=>{
+
         if(id){
             console.log('2222222222222222222222: '+id);
-            getExpenseType(id).then((response)=>{
+            expenseType(id);
+            /*getExpenseType(id).then((response)=>{
                 console.log('--------------1'+JSON.stringify(response.data));
-                setName(response.data.name);
-                setDescription(response.data.description);
-                setRegistrationRequired(response.data.registrationRequired);
+
 
             }).catch(error => {
                 console.log('aaaaaaaaaaaaa............................'+error)
-            });
+            });*/
         }
     },[id])
 
@@ -38,12 +89,7 @@ const ExpenseComponent = () => {
             console.log('--------------2'+JSON.stringify(newExpenseType));
         if(validateForm()) {
             if(id){
-                updateExpenseType(id, newExpenseType).then((response) => {
-                    console.log(response.data);
-                    navigator('/');
-                }).catch(error =>{
-                    console.error(error);
-                });
+                updateExpenseType(id, newExpenseType);
             } else {
                 createExpenseType(newExpenseType).then((response) => {
                     console.log(response.data);
